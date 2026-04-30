@@ -145,3 +145,33 @@ td { padding: 1.2rem; border-bottom: 1px solid var(--border); vertical-align: mi
 .stat-card { background: white; padding: 2rem; border-radius: 12px; box-shadow: var(--shadow); text-align: center; border-bottom: 4px solid var(--primary); }
 .stat-card h3 { font-size: 0.9rem; color: #777; margin: 0; }
 .stat-card p { font-size: 2rem; font-weight: 800; margin: 0.5rem 0; color: var(--primary); }
+/* ============================================================
+   CORRECCIÓN DE RENDERIZADO PARA NAVEGADORES (RESET)
+   Este bloque elimina los estilos por defecto de los navegadores 
+   que pueden causar que los botones se vean "desalineados" en GitHub.
+   ============================================================ */
+
+button, input, select {
+    appearance: none;               /* Elimina el diseño nativo del SO */
+    -webkit-appearance: none;        /* Soporte para Chrome/Safari */
+    -moz-appearance: none;           /* Soporte para Firefox */
+    box-sizing: border-box;         /* Incluye el padding en el ancho total */
+    display: inline-block;
+    vertical-align: middle;
+    outline: none;                  /* Quita el borde azul al hacer click */
+}
+
+/* Contenedor para alinear los botones del formulario uno al lado del otro */
+.button-group {
+    display: flex;
+    gap: 12px;                      /* Espaciado uniforme entre botones */
+    margin-top: 20px;
+    flex-wrap: wrap;                /* Permite que bajen si no hay espacio */
+}
+
+/* Ajuste específico para que los inputs no se vean pegados al texto */
+input[type="text"], 
+input[type="number"], 
+select {
+    margin-bottom: 5px;
+}
