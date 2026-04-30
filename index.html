@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventario — Panel del Gerente</title>
+    <!-- Enlace al archivo de estilos externos para mantener el HTML limpio -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- 
+        SIDEBAR: Navegación lateral del sistema.
+        Utiliza eventos 'onclick' para invocar la lógica de intercambio de secciones en JS.
+    -->
+    <div class="sidebar">
+        <h1>INVENTARIO PRO</h1>
+        <div class="nav-item active" onclick="showSection('section-dashboard', this)">Dashboard</div>
+        <div class="nav-item" onclick="showSection('section-productos', this)">Productos</div>
+        <div class="nav-item" onclick="showSection('section-categorias', this)">Categorías</div>
+    </div>
+
+    <!-- MAIN: Contenedor principal donde se renderiza el contenido dinámico -->
+    <div class="main">
+        
+        <!-- SECCIÓN 1: DASHBOARD (Métricas clave y resumen visual) -->
+        <div id="section-dashboard" class="content-section active">
+            <div class="section-title">Resumen de Inventario</div>
+            <div class="stats-grid">
+                <!-- Los valores ID se actualizan mediante la función updateDashboard() en JS -->
+                <div class="stat-card"><h3>Total Productos</h3><p id="stat-total">0</p></div>
+                <div class="stat-card"><h3>Stock Crítico</h3><p id="stat-low" style="color:var(--danger)">0</p></div>
+                <div class="stat-card"><h3>Valor Total</h3><p id="stat-value">$0.00</p></div>
+            </div>
+        </div>
+
+        <!-- SECCIÓN 2: PRODUCTOS (Formulario de entrada y visualización de datos) -->
+        <div id="section-productos" class="content-section">
+            <div class="card">
+                <div class="section-title" id="formActionTitle">Registrar Nuevo Producto</div>
+                <!-- productId: Campo oculto (hidden) esencial para distinguir entre "Crear" y "Editar" -->
+                <input type="hidden" id="productId">
+                <div class="form-grid">
+                    <div><label>Nombre del Producto</label><input type="text" id="productName"></div>
+                    <div><label>Categoría</label><select id="productCategory"></select></div>
+                    <div><label>Precio Unitario ($)</label><input type="number" id="productPrice" step="0.01"></div>
+                    <div><label>Cantidad en Stock</label><input type="number" id="productStock"></div>
+                    <div><label>Stock Mínimo (Alerta)</label><input type="number" id="productMinStock"></div>
+                </div>
+                <div style="margin-top: 1rem; display: flex; gap: 0.5rem;">
+                    <button id="btnSave" class="btn-primary" onclick="saveProduct()">Guardar Producto</button>
+                    <button class="btn-secondary" onclick="clearForm()">Limpiar</button>
+                </div>
+            </div>
+
+            <!-- TABLA DE DATOS: Renderizado dinámico de la base de datos local -->
+            <div class="card">
+                <div class="section-title">Inventario Actual</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Producto</th>
+                            <th>Categoría</th>
+                            <th>Precio</th>
+                            <th>Stock</th>
+                            <th>Mín.</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- SECCIÓN 3: CATEGORÍAS (Gestión de taxonomías del sistema) -->
+        <div id="section-categorias" class="content-section">
+            <div class="card">
+                <div class="section-title">Gestión de Categorías</div>
+                <div style="display:flex; gap:0.5rem; margin-bottom: 1.5rem;">
+                    <input type="text" id="newCategory" placeholder="Ej: Bebidas, Electrónica...">
+                    <button class="btn-primary" onclick="addCategory()">Añadir Categoría</button>
+                </div>
+                <div id="categoryList"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Carga del script al final para asegurar que el DOM esté listo -->
+    <script src="script.js"></script>
+</body>
+</html>
